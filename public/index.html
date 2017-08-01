@@ -16,6 +16,9 @@
     <div id="message">
       <h1>Firebase確認</h1>
       <p>push:<input type="text" id="text_id" onchange="push()"></p>
+      <p>set:<input type="text" id="text_id2" onchange="set()"></p>
+      <p>update:<input type="text" id="text_id3" onchange="update()"></p>
+      <p>delete:<input type="text" id="text_id4" onchange="remove()"></p>
     </div>
 
     <script>
@@ -23,6 +26,19 @@
         firebase.database().ref('users').push({
           username: document.getElementById('text_id').value
         });
+      }
+      function set() {
+        firebase.database().ref('users').set({
+          username: document.getElementById('text_id2').value
+        });
+      }
+      function update() {
+        firebase.database().ref('users').update({
+          username: document.getElementById('text_id3').value
+        });
+      }
+      function remove() {
+        firebase.database().ref('users').remove();
       }
     </script>
   </body>
