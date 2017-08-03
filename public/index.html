@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  </head>
+    </head>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -11,35 +11,62 @@
       };
       firebase.initializeApp(config);
     </script>
-  </head>
-  <body>
-    <div id="message">
-      <h1>Firebase確認</h1>
-      <p>push:<input type="text" id="text_id" onchange="push()"></p>
-      <p>set:<input type="text" id="text_id2" onchange="set()"></p>
-      <p>update:<input type="text" id="text_id3" onchange="update()"></p>
-      <p>delete:<input type="text" id="text_id4" onchange="remove()"></p>
-    </div>
+    </head>
+    <body>
+        <div id="message">
+            <h1>Firebase確認</h1>
+            <p>signup</p>
+            <p>email:<input type="text" id="email"></p>
+            <p>password:<input type="text" id="password"></p>
+            <p><button onclick="signup()">signup</button></p>
+            <p><button onclick="signin()">signin</button></p>
+            <p><button onclick="signout()">signout</button></p>
+            <br>
+            <p>ログインpush:<input type="text" id="text_id" onchange="push_ok()"></p>
+            <p>ログインしてないpush:<input type="text" id="text_id2" onchange="push_error()"></p>
+        </div>
 
-    <script>
-      function push() {
-        firebase.database().ref('users').push({
-          username: document.getElementById('text_id').value
-        });
-      }
-      function set() {
-        firebase.database().ref('users').set({
-          username: document.getElementById('text_id2').value
-        });
-      }
-      function update() {
-        firebase.database().ref('users').update({
-          username: document.getElementById('text_id3').value
-        });
-      }
-      function remove() {
-        firebase.database().ref('users').remove();
-      }
-    </script>
-  </body>
+        <script>
+          function signup() {
+            var
+              email = document.getElementById('email').value,
+              password = document.getElementById('password').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+              console.log(error.message);
+            });
+          }
+
+          function signin() {
+            var
+              email = document.getElementById('email').value,
+              password = document.getElementById('password').value;
+
+            firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+              console.log(error.message);
+            });
+          }
+
+          function signout() {
+            firebase.auth().signOut().catch(function(error) {
+              console.log(error.message);
+            });
+          }
+
+          function push_ok() {
+            firebase.database().ref('users').push({
+              username: document.getElementById('text_id').value
+            }).catch(function (error) {
+              console.log(error.message);
+            });
+          }
+          function push_error() {
+            firebase.database().ref('rooms').push({
+              username: document.getElementById('text_id').value
+            }).catch(function (error) {
+              console.log(error.message);
+            });
+          }
+        </script>
+    </body>
 </html>
